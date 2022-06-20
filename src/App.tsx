@@ -1,28 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import {FetchData} from './types/fetch';
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "./actions/exp";
+import {ExpState} from "./reducers/index"
+import Display from './Components/Display';
 
 function App() {
-  const [data, setData] = useState<Array<FetchData>>([]);
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    const fecthMovies = async () => {
-      const response = await fetch('https://jsonplaceholder.typicode.com/users');
-      const json = await response.json() as Array<FetchData>;
-      setData(json);
-      console.log(json);
-    }
-    fecthMovies();
+    dispatch(getData());
   },[])
+
 
   return (
     <div className="App">
-      {data && data.map((item, index) => {
-        return (
-          <div key={index}>
-            <h1>{item.name}</h1>
-            <p>{item.email}</p>
-          </div>
-        )
-      },)}
+      <Display />
     </div>
   );
 }
