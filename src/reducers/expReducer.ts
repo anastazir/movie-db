@@ -16,16 +16,15 @@ const expReducer = (state: [Array<FetchData>, boolean] = [[], true], action: Fet
     switch (action.type){
         case "FETCHED":
 
-          state[0] = [...state[0], ...action.data]
-          state[1] = false;
-          console.log("state fetcjed", state);
+          console.log("state fetcjed", [[...state[0], action.data], false]);
+          state = [[...state[0], ...action.data], false]
 
           return state
         case "FETCHING":
-          console.log("Fetching", state);
-
+          
           state[1] = true
-          return state
+          console.log("Fetching", state);
+          return [[...state[0]], false]
         default:
           return state
     }
