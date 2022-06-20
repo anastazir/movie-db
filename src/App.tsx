@@ -1,22 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {FetchData} from './types/fetch';
-import { useDispatch, useSelector } from "react-redux";
-import { getData } from "./actions/exp";
-import {ExpState} from "./reducers/index"
-import Display from './Components/Display';
+import {BrowserRouter as Router ,Route, Routes } from 'react-router-dom';
+import { Home } from './Pages/Home';
+import Movie from './Pages/Movie';
+
 
 function App() {
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getData());
-  },[])
-
-
   return (
-    <div className="App">
-      <Display />
-    </div>
+    <Router>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/movie/:id" element={<Movie/>}/>
+            {/* <Route path="/user" exact = {`${true}`} element={<User/>}/>
+            <Route path="/login" exact = {`${true}`} element={<Login/>}/>
+            <Route path="/signUp" exact = {`${true}`} element={<SignUp/>}/> */}
+          </Routes>
+    </Router>
   );
 }
 
