@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {useParams} from 'react-router-dom';
-import { getMovieData, getMovieRecommendation } from '../actions/exp';
+import { getMovieData, getMovieRecommendation } from '../actions/movie';
 import {ExpState} from "../reducers/index"
 const Movie = () => {
     const details = useSelector((state: ExpState) => state.movieReducer.details);
