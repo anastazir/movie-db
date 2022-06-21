@@ -1,4 +1,4 @@
-import { fetch_movies, recommend_movies } from "../api";
+import * as api from "../api/index"
 
 export const getMovieData  = (id: any) => async (dispatch: any) => {
     console.log("getMovieData", id);
@@ -6,9 +6,10 @@ export const getMovieData  = (id: any) => async (dispatch: any) => {
 
         dispatch({type: "FETCHING"})
 
-        const {data} = await fetch_movies(id);
+        const {data} = await api.movie_details(id);
+        const crew = await api.get_crew(data.imdb_id);
 
-        dispatch({type: "FETCHED", data : data})
+        dispatch({type: "FETCHED", data : {...data, ...crew.data}})
     }
     catch(err) {
         console.log(err);
@@ -16,12 +17,39 @@ export const getMovieData  = (id: any) => async (dispatch: any) => {
 }
 
 export const getMovieRecommendation  = (id: any) => async (dispatch: any) => {
-    console.log("getMovieRecommendation", id);
     try{
 
-        const {data} = await recommend_movies(id);
+        const {data} = await api.recommend_movies(id);
 
         dispatch({type: "RECOMMENDATIONS", data : data})
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+export const searchMovies = (search: string) => async (dispatch: any) => {
+    try{
+
+        dispatch({type: "SEARCHING"})
+
+        const {data} = await api.search_movies(search);
+
+        dispatch({type: "SEARCHED", data : data})
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+export const trendingMovies = () => async (dispatch: any) => {
+    try{
+
+        dispatch({type: "TRENDING"})
+
+        const {data} = await api.trending_movies();
+
+        dispatch({type: "TRENDING_FETCHED", data : data.results})
     }
     catch(err) {
         console.log(err);
