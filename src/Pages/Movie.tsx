@@ -42,6 +42,8 @@ const Movie = () => {
             <p className="text-gray-300 mt-8">{details.overview}</p>
           </div>
         </div>
+      <h1 className="text-4xl mt-4 md:mt-0 font-semibold text-center">Recommendations</h1>
+      <Recommender />
       </div>
   )
 }
