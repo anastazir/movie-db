@@ -9,7 +9,9 @@ const Thumbnail = ({key, movie}: any) => {
     navigate(`/movie/details/${movie.tmdb_id}`);
   }
   return (
-    <img key ={key} src={ movie.poster.replace("original", "w300")} alt="" className=" md:rounded cursor-pointer h-[100px]" onClick={handleClick}/>
+    <div className="relative min-w-[180px] cursor-pointer transition duration-200 ease-out  md:min-w-[260px] md:hover:scale-105">
+      <img key ={key} src={ movie.poster.replace("original", "w300")} alt="" className=" md:rounded cursor-pointer" onClick={handleClick}/>
+    </div>
   )
 }
 
