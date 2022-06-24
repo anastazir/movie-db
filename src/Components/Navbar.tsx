@@ -1,39 +1,66 @@
+import {SearchIcon} from "@heroicons/react/solid"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [isScrolled, setIsScrolled] = useState(false)
+  const navigate = useNavigate()
+
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+  }
+  useEffect(() => {
+    const handleScroll = () =>{
+      if(window.scrollY > 0){
+        setIsScrolled(true)
+      }else{
+        setIsScrolled(false)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  },[])
+
+  const handleClick = () => {
+    console.log(searchTerm);
+    navigate(`/movie/search/${searchTerm}`)
+  }
   return (
-    <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-500">
-    <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-      <div className=" w-auto  px-4 static block justify-start">
-        <a className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white" href="/">
-          Trending
-        </a>
-        <button className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button">
-          <span className="block relative w-6 h-px rounded-sm bg-white"></span>
-          <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-          <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-        </button>
-      </div>
-      <div className="lg:flex flex-grow items-center" id="example-navbar-warning">
-        <ul className="flex flex-col lg:flex-row list-none ml-auto">
-            <li className="nav-item">
-              <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" href="/search">
-                Search
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" href="#pablo">
-                Random
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" href="#pablo">
-                Genres
-              </a>
-            </li>
+    <header className={`${isScrolled && 'bg-black'}`}>
+      <div className="flex items-center space-x-2 md:space-x-10">
+        <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="" width={100} height={100}
+        className = "cursor-pointer object-contain"/>
+        <ul className="hidden space-x-4 md:flex">
+          <li className = "cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3] lg:text-lg">
+            Home
+          </li>
+          <li className = "cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3] lg:text-lg">
+            Movies
+          </li>
+          <li className = "cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3] lg:text-lg">
+            Random
+          </li>
+          <li className = "cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3] lg:text-lg">
+            Genres
+          </li>
         </ul>
       </div>
-    </div>
-    </nav>
+      <div className = "flex items-center space-x-4 sm:text-sm md:text-lg">
+        <div className="relative text-gray-600 focus-within:text-gray-400">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <button className="p-1 focus:outline-none focus:shadow-outline" onClick={handleClick}>
+              <SearchIcon className=" h-6 w-6 sm:inline"/>
+            </button>
+          </span>
+          <input type="search" onChange={handleChange} name="q" className="py-2 text-sm text-white bg-gray-900 rounded-md
+           pl-10 focus:outline-none focus:bg-black focus:text-white" placeholder="Search..." />
+        </div>
+      </div>
+    </header>
   )
 }
 
