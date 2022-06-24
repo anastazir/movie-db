@@ -8,8 +8,9 @@ export const getMovieData  = (id: any) => async (dispatch: any) => {
 
         const {data} = await api.movie_details(id);
         const crew = await api.get_crew(data.imdb_id);
-
+        const recData = await api.recommend_movies(data.imdb_id);
         dispatch({type: "FETCHED", data : {...data, ...crew.data}})
+        dispatch({type: "RECOMMENDATIONS", data : recData.data})
     }
     catch(err) {
         console.log(err);
