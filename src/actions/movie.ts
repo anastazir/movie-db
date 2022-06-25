@@ -43,16 +43,21 @@ export const searchMovies = (search: string) => async (dispatch: any) => {
     }
 }
 
-export const trendingMovies = () => async (dispatch: any) => {
+export const trendingMovies = (page:number) => async (dispatch: any) => {
     try{
 
         dispatch({type: "TRENDING"})
 
-        const {data} = await api.trending_movies();
+        const {data} = await api.trending_movies(page);
 
         dispatch({type: "TRENDING_FETCHED", data : data.results})
     }
     catch(err) {
         console.log(err);
     }
+}
+
+export const incrementPage = (page:number) => (dispatch: any) => {
+    
+    dispatch({type: "INCREMENT_PAGE", data: page})
 }
