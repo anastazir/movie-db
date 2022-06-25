@@ -58,6 +58,18 @@ export const trendingMovies = (page:number) => async (dispatch: any) => {
 }
 
 export const incrementPage = (page:number) => (dispatch: any) => {
-    
+
     dispatch({type: "INCREMENT_PAGE", data: page})
+}
+
+export const genreSearch = (genres:string, page:number) => async (dispatch: any) => {
+    try{
+        dispatch({type: "FETCHING_GENRES"})
+        const {data} = await api.genre_search(genres, page)
+        console.log("FETCHING_GENRES", data.results);
+        dispatch({type: "GENRE_LIST", data: data.results})
+    }
+    catch(err) {
+        console.log(err);
+    }
 }
