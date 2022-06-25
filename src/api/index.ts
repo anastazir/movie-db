@@ -9,7 +9,7 @@ export const recommend_movies = (id:any) => API.get<any>(`/movies/recommend/${id
 
 export const search_movies = (search:any) => API.get<any>(`/movies/search/${search}`);
 
-export const trending_movies = (page:number) => API2.get<any>(`trending/movie/day?api_key=26ba5e77849587dbd7df199727859189&page=${page}`)
+export const trending_movies = (page:number) => API2.get<any>(`trending/movie/day?api_key=26ba5e77849587dbd7df199727859189&language&page=${page}`)
 
 export const movie_details = (id:any) => API2.get<any>(`movie/${id}?api_key=26ba5e77849587dbd7df199727859189`)
 
