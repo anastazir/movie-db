@@ -7,13 +7,19 @@ interface TrendingAction {
     data : any
   }
 
-const trendingReducer = (state: any = {loading: false, movieLists: []}, action: TrendingAction | TrendingActionFetched ) => {
+  interface IncrementPage{
+    type: "INCREMENT_PAGE"
+    data : number
+  }
+
+const trendingReducer = (state: any = {loading: true, movieLists: [], page: 1}, action: TrendingAction | TrendingActionFetched | IncrementPage) => {
     switch (action.type){
         case "TRENDING_FETCHED":
-          console.log({movieLists: action.data, loading: false});
-          return {movieLists: action.data, loading: false}
+          return {movieLists: [...state.movieLists,...action.data], loading: false, page:state.page}
         case "TRENDING":
           return {...state, loading: true}
+        case "INCREMENT_PAGE":
+          return {page:action.data, ...state}
         default:
           return state
     }
