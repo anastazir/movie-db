@@ -4,7 +4,9 @@ import { combineReducers } from 'redux';
 import movieReducer from './movieReducer'
 import trendingReducer from './trendingReducer'
 import searchReducer from "./searchReducer"
-const reducers = combineReducers({ movieReducer, trendingReducer, searchReducer });
+import genreReducer from "./genreReducer"
+
+const reducers = combineReducers({ movieReducer, trendingReducer, searchReducer, genreReducer });
 
 export default reducers
 
