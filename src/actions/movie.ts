@@ -4,13 +4,14 @@ export const getMovieData  = (id: any) => async (dispatch: any) => {
     console.log("getMovieData", id);
     try{
 
-        dispatch({type: "FETCHING"})
-
+        dispatch({type: "FETCHING_DETAILS"})
         const {data} = await api.movie_details(id);
         const crew = await api.get_crew(data.imdb_id);
+        dispatch({type: "FETCHED_DETAILS", data : {...data, ...crew.data}})
+
+        dispatch({type: "FETCHING_RECOMMENDATIONS"})
         const recData = await api.recommend_movies(data.imdb_id);
-        dispatch({type: "FETCHED", data : {...data, ...crew.data}})
-        dispatch({type: "RECOMMENDATIONS", data : recData.data})
+        dispatch({type: "FETCHED_RECOMMENDATIONS", data : recData.data})
     }
     catch(err) {
         console.log(err);
