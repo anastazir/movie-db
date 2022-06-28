@@ -33,8 +33,25 @@ const useDb = () => {
       console.log("error", err);
     })
   }
-  const deleteFavorites = async (docId:string | undefined) => {
-    await deleteDoc(doc(db, `${id}/movies/favorites/${docId}`))
+
+  const addToHistory = async(movie: RootObject2 & RootObject) => {
+    if (!movie){
+      return
+    }
+    await addDoc(collection(db, `${id}/movies/history`), {
+      adult: movie.adult,
+      backdrop_path: movie.backdrop_path,
+      id: movie.id,
+      title: movie.title,
+      original_title: movie.original_title,
+      poster_path: movie.poster_path,
+      release_date: movie.release_date,
+    }).then((details)=>{
+      console.log("saved to history");
+    }).catch((err)=>{
+      console.log("error", err);
+    })
+  }
 
   }
     return {addToList, deleteFavorites}
