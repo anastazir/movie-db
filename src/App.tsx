@@ -7,6 +7,7 @@ import Genres from './Pages/Genres';
 import Favorites from './Pages/Favorites';
 import Login from './Pages/Login';
 import { AuthProvider } from './hooks/useAuth';
+import Seen from './Pages/Seen';
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
           <Route path="/movie/genres" element={<Genres/>}/>
           <Route path="/movie/favorites" element={<Favorites />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/movie/seen" element={<Seen/>}/>
+
         </Routes>
         </div>
       </AuthProvider>

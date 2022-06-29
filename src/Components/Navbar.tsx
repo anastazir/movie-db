@@ -3,12 +3,11 @@ import { useEffect, useState } from "react"
 import { useNavigate, useLocation} from "react-router-dom"
 import useAuth from "../hooks/useAuth";
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [isScrolled, setIsScrolled] = useState(false)
-  const {getUser, logout} = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation()
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const {getUser, logout} = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
   }
@@ -44,8 +43,8 @@ const Navbar = () => {
           <li onClick={() => navigate("/movie/favorites")} className = {classes + (location.pathname === "/movie/favorites" ? " underline" : "")}>
               Favorites
           </li>
-          <li className = {classes}>
-            Random
+          <li onClick={() => navigate("/movie/seen")} className = {classes + (location.pathname === "/movie/seen" ? " underline" : "")}>
+            Seen
           </li>
           <li onClick={() => navigate("/movie/genres")} className = {classes + (location.pathname === "/movie/genres" ? " underline" : "")}>
             Genres
