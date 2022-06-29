@@ -19,3 +19,22 @@ export const favorites = (userId: string) => async (dispatch: any) => {
         dispatch({type: "FIREBASE_LOADED"})
     }
 };
+
+export const seen = (userId: string) => async (dispatch: any) => {
+    dispatch({type: "FIREBASE_LOADING"})
+    try {
+        const list = <any>[]
+        const listIds = <any>[]
+        const querySnapshot = await getDocs(collection(db, `${userId}/movies/seen`))
+            querySnapshot.forEach((doc) => {
+            list.push({ docId: doc.id, ...doc.data() });
+            listIds.push(doc.data().id);
+        }
+        );
+        dispatch({type: "FIREBASE_SEEN", data : list})
+    } catch (err) {
+        console.log(err);
+    } finally {
+        dispatch({type: "FIREBASE_LOADED"})
+    }
+};
