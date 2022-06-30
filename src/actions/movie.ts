@@ -1,6 +1,6 @@
 import * as api from "../api/index"
 
-export const getMovieData  = (id: string | undefined) => async (dispatch: any) => {
+export const getMovieAndRecommendations  = (id: string | undefined) => async (dispatch: any) => {
     try{
 
         dispatch({type: "FETCHING_DETAILS"})
@@ -8,23 +8,14 @@ export const getMovieData  = (id: string | undefined) => async (dispatch: any) =
         const crew = await api.get_crew(data.imdb_id);
         dispatch({type: "FETCHED_DETAILS", data : {...data, ...crew.data}})
 
-    }
-    catch(err) {
-        console.log(err);
-    }
-}
-
-export const getMovieRecommendation  = (id: string, genres: string) => async (dispatch: any) => {
-    dispatch({type: "FETCHING_RECOMMENDATIONS"})
-    try{
-        // console.log(id, genres);
-        const promise = await Promise.all([api.get_similar_movies(id),  api.genre_search(genres), api.recommend_movies_web(id)])
-        // console.log("Promise.all", );
-        // const {data: similarMovies} = await api.get_similar_movies(id)
-        // const {data: genreRecommendations} = await api.genre_search(genres)
-        // const {data: webRecommendations} = await api.recommend_movies_web(id);
+        dispatch({type: "FETCHING_RECOMMENDATIONS"})
+        const genres = data?.genres?.map((genre:any, index:number) => {
+            return genre.id
+        }).join(",")    
+        const promise = await Promise.all([api.get_similar_movies(data.id),  api.genre_search(genres), api.recommend_movies_web(data.id)])
 
         dispatch({type: "FETCHED_RECOMMENDATIONS", data : promise.map((a : any) => a.data.results)})
+          
     }
     catch(err) {
         console.log(err);

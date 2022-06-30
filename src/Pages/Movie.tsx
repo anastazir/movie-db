@@ -1,32 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {useParams} from 'react-router-dom';
-import { getMovieData } from '../actions/movie';
+import { getMovieAndRecommendations } from '../actions/movie';
 import {ExpState} from "../reducers/index"
 import Row from '../Components/Row';
 import Details from '../Components/Details';
 import Footer from '../Components/Footer';
-import { HeartIcon, EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
-// import { addToWatchlist, isInWatchlist, removeFromWatchlist } from '../localStorage/wishList';
 import useDb from '../hooks/useDb';
 
 const Movie = () => {
   const {innerWidth:width} = window
   const {id} = useParams();
-  const details = useSelector((state: ExpState) => state.movieReducer.details);
+  const dispatch = useDispatch();
+  const details = useSelector((state: ExpState) => state.movieReducer.details)
   const loading = useSelector((state: ExpState) => state.movieReducer.loading);
   const loadingRec = useSelector((state: ExpState) => state.movieReducer.loadingRec);
-  const dispatch = useDispatch();
-  const [seen, setSeen] = useState(false);
+  const recLists = useSelector((state: ExpState) => state.movieReducer.movieLists) as Array<any>
     const {addToHistory} = useDb()
     const image500 = "https://image.tmdb.org/t/p/original"
-    // const [isFav, setIsFav] = useState(isInWatchlist(id as number | undefined))
-    // console.log(isFav);
     
-    const iconClasses = "h-9 w-9 absolute md:bottom-0 md:right-[50%] cursor-pointer transition-all duration-200 "
     useEffect(() => {
+      dispatch(getMovieAndRecommendations(id))
       window.scrollTo(0, 0)
-      dispatch(getMovieData(id));
     },[id])
     useEffect(() =>{
       if (details){
@@ -42,15 +37,11 @@ const Movie = () => {
         </div>
       )
     }
-    const handleHeart = () => {
-    
-    }
     return (
     <>
-      <div className="relative">
         <section className="relative z-50 ">
           <div className="relative w-full">
-            <img className="object-contain " src={`${image500}${width>600 ? details.backdrop_path : details.poster_path}`} alt=""/>
+            <img className="object-contain brightness-95" src={`${image500}${width>600 ? details.backdrop_path : details.poster_path}`} alt=""/>
           </div>
           <div className="absolute inset-y-28 md:inset-y-auto md:top-10 inset-x-4 md:inset-x-12 space-y-6 z-50">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
@@ -69,10 +60,6 @@ const Movie = () => {
                 </span>
               )},)}
             </div>
-            <span className={iconClasses + "flex-col"}>
-              {seen ? <EyeIcon  /> : <EyeOffIcon />}
-              <HeartIcon onClick={handleHeart} />
-            </span>
             <Details movie={details}/>
           </div>
         </section>
@@ -85,7 +72,6 @@ const Movie = () => {
           </>
         )}
         <Footer />
-      </div>
     </>
   )
 }
