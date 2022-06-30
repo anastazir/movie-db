@@ -76,9 +76,14 @@ const Movie = () => {
             <Details movie={details}/>
           </div>
         </section>
-        {!loadingRec && (<section className="md:space-y-24">
-          <Row />
-        </section>)}
+        {!loadingRec && recLists && 
+        (
+          <>
+            <Row title="Recommendations" recLists = {recLists[2]} loading = {loadingRec}/>
+            <Row title="Similar" recLists = {recLists[0]} loading = {loadingRec}/>
+            <Row title="Similar Genres" recLists = {recLists[1]} loading = {loadingRec}/>
+          </>
+        )}
         <Footer />
       </div>
     </>
