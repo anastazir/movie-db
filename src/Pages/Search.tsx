@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchMovies } from '../actions/movie';
-import RecCard from '../Components/RecCard';
 import Footer from '../Components/Footer';
+import MovieCard from '../Components/MovieCard';
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -20,9 +20,9 @@ const Search = () => {
       <>
         <div className="grid sm:gird-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-6 overflow-hidden pb-9 px-10 py-5">
           {loading && <div>Loading...</div>}
-          {!loading && movies.map((item:any, index:number) => {
+          {!loading && movies && movies.map((item:any, index:number) => {
           return (
-            <RecCard movie={item} index={index} />
+            <MovieCard movie={item} key={index}/>
           )},)}
         </div>
       <Footer />
