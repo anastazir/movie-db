@@ -48,7 +48,7 @@ const Genres = () => {
         {loading && <div>Loading...</div>}
         {movieLists && movieLists.map((movie:any, index:number) => {
           return (
-            <MovieCard key={index} movie={movie} />
+            <MovieCard key={index} movie={movie}/>
           )},
         )}
       </div>

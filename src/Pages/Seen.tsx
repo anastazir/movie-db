@@ -27,7 +27,7 @@ const Seen = () => {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-6 overflow-hidden pb-9 px-10 py-5">
           {mr && mr.map((movie:RootObject2, index:number) => {
             return (
-              <MovieCard key={index} movie={movie} type="seen"/>
+              <MovieCard key={index} movie={movie}/>
             )},
           )}
         </div>
