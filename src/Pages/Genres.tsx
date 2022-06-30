@@ -22,14 +22,17 @@ const Genres = () => {
     })
     setGenresIds(l)
   }, [genres])
-  
+
   const handleClick = () => {
+    dispatch({type: "CLEAR_LIST"})
     dispatch(genreSearch(genresIds.join(), page))
   }
+
   const handleSearch = () => {
     dispatch(genreSearch(genresIds.join(), page+1))
     setPage(page+1)
   }
+
   return (
     <>
     <div className="h-full">
@@ -79,7 +82,7 @@ const ChipButton = ({genre, setGenres, genres}:Porps) => {
 
   const handleClick = () => {
     if (isSelected) {
-      
+
       newArr = genres.filter(function(item){
         if(item !== genre){
           return item
@@ -97,8 +100,7 @@ const ChipButton = ({genre, setGenres, genres}:Porps) => {
       {!isSelected && 
         <span onClick={handleClick} className=" cursor-pointer px-4 py-2 rounded-full text-gray-500 bg-gray-200 font-semibold  flex align-center w-maxactive:bg-gray-300 transition duration-300 ease">
           {genre}
-        </span>
-      }
+        </span>}
       {isSelected && 
       <span className=" cursor-pointer px-4 py-2 rounded-full text-gray-500 bg-green-300 font-semibold flex align-center w-max active:bg-gray-300 transition duration-300 ease">
         {genre}
@@ -111,8 +113,7 @@ const ChipButton = ({genre, setGenres, genres}:Porps) => {
             </path>
           </svg>
         </button>
-      </span>
-      }
+      </span>}
     </div>
     </>
   )

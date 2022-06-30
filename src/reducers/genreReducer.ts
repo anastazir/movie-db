@@ -11,6 +11,8 @@ const genreReducer = (state: Genres = {genres: "", movieLists: [], loading: fals
           return {...state, loading: true}
         case "GENRE_LIST":
           return {...state, movieLists: [...state.movieLists,...action.data], loading: false}
+        case "CLEAR_LIST":
+          return {...state, movieLists: [], page:0}
         default:
           return state
     }
