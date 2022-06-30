@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const classes = "cursor-pointer text-sm font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3] lg:text-lg"
   const handleClick = () => {
-    navigate(`/movie/search/${searchTerm}`)
+    navigate(`/movie/search/${searchTerm.replace(" ", '-').toLowerCase()}`)
   }
 
   return (
