@@ -22,6 +22,10 @@ const MovieCard = ({movie, key}: Props) => {
     const {addToList, deleteFavorites, addToSeen} = useDb()
     const handleClick = () => {
         setFav(!fav)
+        if (fav){
+            del()
+            return
+        }
         addToList(movie)
     }
     const seen = () => {
