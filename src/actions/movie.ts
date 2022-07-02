@@ -5,8 +5,8 @@ export const getMovieAndRecommendations  = (id: string | undefined) => async (di
 
         dispatch({type: "FETCHING_DETAILS"})
         const {data} = await api.movie_details(id);
-        const crew = await api.get_crew(data.imdb_id);
-        dispatch({type: "FETCHED_DETAILS", data : {...data, ...crew.data}})
+        // const crew = await api.get_crew(data.imdb_id);
+        dispatch({type: "FETCHED_DETAILS", data : data})
 
         dispatch({type: "FETCHING_RECOMMENDATIONS"})
         const genres = data?.genres?.map((genre:any, index:number) => {

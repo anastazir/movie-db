@@ -2,7 +2,6 @@ import axios from 'axios';
 
 // const API = axios.create({ baseURL: 'http://127.0.0.1:5000' });
 const API2 = axios.create({ baseURL: 'https://api.themoviedb.org/3/'})
-const API3 = axios.create({ baseURL: 'http://www.omdbapi.com/'})
 // export const fetch_movies = (id:any) => API.get<any>(`/movies/fetch/${id}`);
 
 export const search_movies = (search:any, page:number = 1) => API2.get<any>(`search/movie?api_key=${process.env.REACT_APP_TMDB_API}&query=${search}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`);
@@ -10,8 +9,6 @@ export const search_movies = (search:any, page:number = 1) => API2.get<any>(`sea
 export const trending_movies = (page:number) => API2.get<any>(`trending/movie/day?api_key=${process.env.REACT_APP_TMDB_API}&language&page=${page}`)
 
 export const movie_details = (id:any) => API2.get<any>(`movie/${id}?api_key=${process.env.REACT_APP_TMDB_API}`)
-
-export const get_crew = (imdb_id:any) => API3.get<any>(`?i=${imdb_id}&apikey=ac6564b1`)
 
 export const genre_search = (genres:string, page:number = 1) => API2.get<any>(`discover/movie?api_key=${process.env.REACT_APP_TMDB_API}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genres}`)
 
