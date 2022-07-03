@@ -5,14 +5,13 @@ import useAuth from "../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import {  seen } from "../actions/firebase";
 import { ExpState } from "../reducers";
+import Grid from "../Components/Grid";
 
 const Seen = () => {
-    const mr = useSelector((state: ExpState) => state.firebaseReducer.seen) as RootObject2[]
-    const loading = useSelector((state: ExpState) => state.firebaseReducer.loading);
-  
-    const dispatch = useDispatch();
-
-    const {getUser} = useAuth()
+      const mr = useSelector((state: ExpState) => state.firebaseReducer.seen) as RootObject2[]
+      const loading = useSelector((state: ExpState) => state.firebaseReducer.loading);
+      const dispatch = useDispatch();
+      const {getUser} = useAuth()
       const user = getUser()
       document.title = "Seen"
       useEffect(() =>{
@@ -20,19 +19,19 @@ const Seen = () => {
       }, [])
       if(!user){
        return ( <div>
-          You must be memeber to add and see favorites.
+          You must be member to add and see favorites.
         </div>)
       }else if(loading) return <div>Loading...</div>
       return (
-        <>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-6 overflow-hidden pb-9 px-10 py-5">
+      <>
+        <Grid>
           {mr && mr.map((movie:RootObject2, index:number) => {
             return (
               <MovieCard key={index} movie={movie}/>
             )},
           )}
-        </div>
-        </>
+        </Grid>
+      </>
     )
 }
 

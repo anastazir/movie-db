@@ -5,6 +5,7 @@ import Footer from '../Components/Footer';
 import { genreSearch } from '../actions/movie';
 import { ExpState } from '../reducers';
 import MovieCard from '../Components/MovieCard';
+import Grid from '../Components/Grid';
 
 const Genres = () => {
   const [page, setPage] = useState(1)
@@ -48,14 +49,14 @@ const Genres = () => {
           Search
         </button>
       </div>
-      <div className="grid sm:gird-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-6 overflow-hidden pb-9 px-10 py-5">
+      <Grid>
         {loading && <div>Loading...</div>}
         {movieLists && movieLists.map((movie:any, index:number) => {
           return (
             <MovieCard key={index} movie={movie}/>
           )},
         )}
-      </div>
+      </Grid>
       {movieLists && !loading && (
         <div className="flex mt-5 py-5">
         <button onClick ={handleSearch} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-auto">
