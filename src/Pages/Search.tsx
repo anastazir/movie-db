@@ -10,7 +10,7 @@ const Search = () => {
     const {search} = useParams();
     const movies = useSelector((state: any) => state.searchReducer.moviesList);
     const loading = useSelector((state: any) => state.searchReducer.loading);
-    
+    document.title = "Search " + search
     useEffect(() =>{
       dispatch(searchMovies(search as string));
 

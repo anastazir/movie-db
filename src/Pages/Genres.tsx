@@ -13,6 +13,7 @@ const Genres = () => {
   const [genres, setGenres] = useState([""])
   const [genresIds, setGenresIds] = useState<number[]>([])
   const dispatch = useDispatch();
+  document.title = "Genres"
   let l: number[] =[]
   useEffect(() =>{
     Object.entries(GENRE_IDS).forEach(([key, value]) => {

@@ -25,6 +25,7 @@ const Movie = () => {
     },[id])
     useEffect(() =>{
       if (details){
+        document.title = details.title || details.original_name;
         addToHistory(details)
       }
     }, [details])

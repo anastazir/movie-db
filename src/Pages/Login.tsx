@@ -9,6 +9,7 @@ const Login = () => {
     const {signIn, signUp} = useAuth()
     const [login, setLogin] = useState(true)
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+    document.title = "Login/Sign Up"
     const onSubmit: SubmitHandler<Inputs> = async ({email, password}) => {
         if(login) {
             await signIn(email, password)

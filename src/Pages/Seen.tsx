@@ -14,6 +14,7 @@ const Seen = () => {
 
     const {getUser} = useAuth()
       const user = getUser()
+      document.title = "Seen"
       useEffect(() =>{
         dispatch(seen(user?.uid || ""));
       }, [])

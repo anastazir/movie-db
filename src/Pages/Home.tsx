@@ -10,6 +10,7 @@ export const Home = () => {
   const dispatch = useDispatch();
   const movieLists = useSelector((state: ExpState) => state.trendingReducer.movieLists);
   const loading = useSelector((state: ExpState) => state.trendingReducer.loading);
+  document.title = "Home"
 
   useEffect(() => {
     dispatch(trendingMovies(page));

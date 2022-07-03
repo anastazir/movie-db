@@ -12,6 +12,7 @@ const Favorites = () => {
 
   const dispatch = useDispatch();
 
+    document.title = "Favorites";
     const {getUser} = useAuth()
     const user = getUser()
     useEffect(() =>{
