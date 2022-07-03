@@ -1,5 +1,5 @@
 
-const movieReducer = (state: any = {details: [], loading: true, movieLists: [], loadingRec: true}, action: any) => {
+const movieReducer = (state: any = {details: null, loading: true, movieLists: [], loadingRec: true, director: [], cast: []}, action: any) => {
     switch (action.type){
         case "FETCHED_DETAILS":
           return {details: action.data, loading: false}
@@ -9,6 +9,8 @@ const movieReducer = (state: any = {details: [], loading: true, movieLists: [], 
           return {...state, loadingRec: true}
         case "FETCHED_RECOMMENDATIONS":
           return {...state, movieLists: action.data, loadingRec : false}
+        case "CREW_AND_CAST":
+          return {...state, director: action.data.director, cast: action.data.cast}
         default:
           return state
     }

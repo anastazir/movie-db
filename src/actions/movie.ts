@@ -5,17 +5,32 @@ export const getMovieAndRecommendations  = (id: string | undefined) => async (di
 
         dispatch({type: "FETCHING_DETAILS"})
         const {data} = await api.movie_details(id);
+
         // const crew = await api.get_crew(data.imdb_id);
         dispatch({type: "FETCHED_DETAILS", data : data})
 
+        const {data:crewData} = await api.get_crew(id)
+
+        const director = crewData.crew.filter((crew:any) =>{
+            if (crew.job === "Director"){
+                return true;
+            }else return false;
+        })
+
+        const cast = crewData.cast.slice(0, 3)
+
+        dispatch({type: "CREW_AND_CAST", data: {"director" : director, "cast" : cast}})
+
         dispatch({type: "FETCHING_RECOMMENDATIONS"})
+
         const genres = data?.genres?.map((genre:any, index:number) => {
             return genre.id
-        }).join(",")    
-        const promise = await Promise.all([api.get_similar_movies(data.id),  api.genre_search(genres), api.recommend_movies_web(data.id)])
+        }).join(",");
 
-        dispatch({type: "FETCHED_RECOMMENDATIONS", data : promise.map((a : any) => a.data.results)})
-          
+        const promise_web = await Promise.all([api.get_similar_movies(data.id),  api.genre_search(genres), api.recommend_movies_web(data.id)])
+
+        dispatch({type: "FETCHED_RECOMMENDATIONS", data : promise_web.map((a : any) => a.data.results)})
+
     }
     catch(err) {
         console.log(err);
