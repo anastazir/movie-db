@@ -19,7 +19,7 @@ const MovieCard = ({movie, key}: Props) => {
     const { innerWidth: width } = window;
     const dispatch = useDispatch();
     
-    const {addToList, deleteFavorites, addToSeen} = useDb()
+    const {addToList, deleteDocument, addToSeen} = useDb()
     const handleClick = () => {
         setFav(!fav)
         if (fav){
@@ -32,8 +32,13 @@ const MovieCard = ({movie, key}: Props) => {
         addToSeen(movie)
     }
     const del = () => {
-        dispatch({type: "DELETE_DOC", data: movie.original_title})
-        deleteFavorites(movie.original_title)
+        if (location.pathname === "/movie/favorites"){
+            dispatch({type: "DELETE_FAVORITES", data: movie.original_title})
+            deleteDocument(movie.original_title, "favorites")
+        }else{
+            dispatch({type: "DELETE_SEEN", data: movie.original_title})
+            deleteDocument(movie.original_title, "seen")
+        }
     }
     const image500 = "https://image.tmdb.org/t/p/w500"
     return (
@@ -41,14 +46,14 @@ const MovieCard = ({movie, key}: Props) => {
             <Link to={`/movie/details/${movie.id}`}>
                 <img className="rounded-lg m-auto hover:opacity-80 transition-all duration-200" src={ `${image500}${width<600 ? movie.backdrop_path : movie.poster_path}`} alt="" />
             </Link>
-            {(location.pathname !== "/") && (<button onClick={del} 
+            {(location.pathname !== "/" && location.pathname !== "/movie/genres") && (<button onClick={del} 
             className="z-5 opacity-0 transition hover:scale-125 group-hover:opacity-100 h-5 w-5 md:h-8 md:w-8 absolute top-0 left-0 cursor-pointer">
                <XCircleIcon / >
             </button>)}
-            {(location.pathname === "/") && <button onClick={seen} className="z-5  lg:opacity-0 transition hover:scale-125 group-hover:opacity-100 h-5 w-5 md:h-8 md:w-8 absolute bottom-0 right-0 cursor-pointer">
+            {(location.pathname === "/" || location.pathname === "/movie/genres") && <button onClick={seen} className="z-5  lg:opacity-0 transition hover:scale-125 group-hover:opacity-100 h-5 w-5 md:h-8 md:w-8 absolute bottom-0 right-0 cursor-pointer">
                 <EyeIcon className ={`${fav}`} />
             </button>}
-            {(location.pathname === "/") && <button onClick={handleClick} className="z-5  lg:opacity-0 transition hover:scale-125 group-hover:opacity-100 h-5 w-5 md:h-8 md:w-8 absolute bottom-0 left-0 cursor-pointer">
+            {(location.pathname === "/" || location.pathname === "/movie/genres") && <button onClick={handleClick} className="z-5  lg:opacity-0 transition hover:scale-125 group-hover:opacity-100 h-5 w-5 md:h-8 md:w-8 absolute bottom-0 left-0 cursor-pointer">
                 <HeartIcon className ={`${fav && "fill-red-600"}`} />
             </button>}
         </div>

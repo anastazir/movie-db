@@ -77,18 +77,18 @@ const useDb = () => {
     })
   }
 
-  const deleteFavorites = async (original_title:string | undefined) => {
+  const deleteDocument = async (original_title:string | undefined, collectionName: string) => {
     if (!id) return
 
-    const collRef = collection(db, `${id}/movies/favorites`)
+    const collRef = collection(db, `${id}/movies/${collectionName}`)
     const q = query(collRef, where("original_title", "==",  original_title))
     onSnapshot(q, (snapshot) => {
       snapshot.docs.forEach(async (docs) => {
-        await deleteDoc(doc(db, `${id}/movies/favorites/${docs.id}`))
+        await deleteDoc(doc(db, `${id}/movies/${collectionName}/${docs.id}`))
       })
     })
   }
-  return {addToList, deleteFavorites, addToHistory, addToSeen}
+  return {addToList, deleteDocument, addToHistory, addToSeen}
 }
 
 export default useDb
