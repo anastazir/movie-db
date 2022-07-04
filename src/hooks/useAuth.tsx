@@ -41,7 +41,6 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             } else {
                 // console.log("user not logged in");
             setUser(null)
-            navigate('/login', {replace: true })
             }
             setInitialLoading(false)
         }),[auth])
@@ -53,6 +52,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             navigate('/', {replace: true })
             setLoading(false)
         }).catch((error) => {
+            alert(error.message)
             console.log("error during singup was", error.message);
         }).finally(()=>setLoading(false))
     }
@@ -65,6 +65,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             setLoading(false)
         }).catch((error) => {
             setError(error)
+            alert(error.message)
             console.log("error during singup was", error.message);
         }).finally(()=>setLoading(false))
     }
@@ -76,6 +77,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             navigate('/login', {replace: true })
         }).catch((err)=>{
             setError(err)
+            alert(err.message)
             console.log("error during logging out was", err.message);
         }).finally(()=>setLoading(false))
     }
